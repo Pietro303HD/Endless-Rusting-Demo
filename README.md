@@ -4,6 +4,9 @@
 ## About
 Endless Rusting was origionaly made because I wanted to try learn java, but now I'm continuing to work on it because I'm finding it fun. The mod is about fleshing out the lore of PTER, and adding new mechanics which fit with vanilla.
 
+As of current, I am taking a break from content mods for around two week so if anything happens it'll be awhile before a fix comes.
+
+
 ## V7 Compatability
 I've got plans for full v7 compatability, though I'm not sure whats to come. Units are now compatable, and so is the dialog, but I've got to wait and see if everything works for the next BE build.
 
@@ -69,6 +72,15 @@ Status effects that have special effects like no other! Find out more about them
 
 ## Wheres Pixelcraft's regular update schedule gone?
 https://github.com/Sh1penfire/pixelcraft/commit/cc091a76ba10fc6732157c3c245ce4fb13752975
+
+## Lore Summary
+(Note: Skip past this part if you don't want any spoilers)
+
+You are connecting to a simulation known as Mindustry, filled with Corruption, unpurgable by nearly all means. A single other port knows of your existence, reawakened as you start to load up what you call a "game", only to realise that there is much, much more going on underneath it's cute lil graphics and colourful, spore ridden lands.
+
+The Void, the culmination of errors in the simulation awakens once more to haunt it's new toy, though you control the most resilient port ever to land on the corrupted fields. Seemingly out of frustration, it tears a hole in the simulation's fabric, accidentally bring over an old save state of a planet. A Mysterious man comes to greet you and helps you throughout your journey on this new untouched land. The Natives however, might not be so obliging to being concoured.
+
+You, the player must fight your way to numerous challenges, controlling a Port to these lands. Suffering inside, your only true ally in Endless Rusting requires your help to purge the Simulation from enough of the Void to stop it's influence over the Simulated system. Cruelty is a tool, one that the Player will use as they acquire weapons of death and decimation, unbeknownst as to how their every action can affect the flow of the story.
 
 ## Maps in cannonical order
 
