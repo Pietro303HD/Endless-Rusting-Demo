@@ -29,8 +29,7 @@ import rusting.content.*;
 import rusting.core.holder.CustomConsumerModule;
 import rusting.core.holder.CustomStatHolder;
 import rusting.ctype.ResearchType;
-import rusting.interfaces.PulseBlockc;
-import rusting.interfaces.ResearchableBlock;
+import rusting.interfaces.*;
 import rusting.world.blocks.pulse.utility.PulseResearchBlock;
 import rusting.world.modules.PulseModule;
 import rusting.world.modules.ResearchModule;
@@ -263,11 +262,8 @@ public class PulseBlock extends Block implements ResearchableBlock {
             return customConsumeValid() && ((team == Team.derelict || (team == state.rules.waveTeam && cruxInfiniteConsume)) && !state.rules.pvp || consValid());
         }
 
-        public boolean canRecievePulse(float pulse){
-            return canRecievePulse(pulse, this);
-        }
-
-        public boolean canRecievePulse(float pulse, Building build){
+        @Override
+        public boolean canRecievePulse(float pulse, Pulsec build){
             return pulse + pulseModule.pulse < pulseStorage + (canOverload ? overloadCapacity : 0);
         }
 
@@ -275,7 +271,8 @@ public class PulseBlock extends Block implements ResearchableBlock {
             return connectable;
         }
 
-        public boolean receivePulse(float pulse, Building source){
+        @Override
+        public boolean receivePulse(float pulse, Pulsec source){
             tmpBool = canRecievePulse(pulse, source);
             if(tmpBool) addPulse(pulse, source);
             return tmpBool;
@@ -286,11 +283,12 @@ public class PulseBlock extends Block implements ResearchableBlock {
             pulseModule.pulse = pulseStorage + overloadCapacity;
         }
 
+        @Override
         public void addPulse(float pulse){
             addPulse(pulse, null);
         }
 
-        public void addPulse(float pulse, @Nullable Building building){
+        public void addPulse(float pulse, @Nullable Pulsec building){
             float storage = pulseStorage + (canOverload ? overloadCapacity : 0);
             float resistAmount = (building != this ? falloff : 0);
             pulseModule.pulse += Math.max(pulse - resistAmount, 0);

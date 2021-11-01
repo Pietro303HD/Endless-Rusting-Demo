@@ -17,6 +17,7 @@ import mindustry.world.Tile;
 import rusting.Varsr;
 import rusting.content.*;
 import rusting.interfaces.PulseBlockc;
+import rusting.interfaces.Pulsec;
 
 import static mindustry.Vars.*;
 
@@ -80,7 +81,7 @@ public class PulseCondensary extends PulseGenericCrafter{
                 }
                 else {
                     PulseBlockc building = (PulseBlockc) build;
-                    if (receivePulse(gatherAmount, (Building) building)) {
+                    if (receivePulse(gatherAmount, (Pulsec) building)) {
                         building.removePulse(gatherAmount);
                     }
                     gatheredTiles.add(build);

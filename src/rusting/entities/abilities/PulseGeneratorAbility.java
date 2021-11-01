@@ -9,6 +9,7 @@ import mindustry.gen.Unit;
 import mindustry.graphics.Layer;
 import rusting.content.Palr;
 import rusting.entities.units.CraeUnitEntity;
+import rusting.interfaces.Pulsec;
 import rusting.world.blocks.pulse.PulseBlock;
 import rusting.world.blocks.pulse.PulseBlock.PulseBlockBuild;
 
@@ -32,7 +33,7 @@ public class PulseGeneratorAbility extends MountAbility {
             angle(unit.angleTo(building) - 90);
         }
         else{
-            building = (PulseBlockBuild) Vars.indexer.findTile(unit.team, unit.x, unit.y, range, b -> b instanceof PulseBlockBuild && ((PulseBlockBuild) b).canRecievePulse(pulse));
+            building = (PulseBlockBuild) Vars.indexer.findTile(unit.team, unit.x, unit.y, range, b -> b instanceof PulseBlockBuild && ((PulseBlockBuild) b).canRecievePulse(pulse, (Pulsec) unit));
             if(timeSincePulse >= 360) {
                 //I swear theres an easier way to do this
                 float unitRotation = unit.rotation - 90;
@@ -73,7 +74,7 @@ public class PulseGeneratorAbility extends MountAbility {
     }
 
     public boolean validate(PulseBlockBuild checkedBuilding, Unit unit){
-        return building != null && building.canRecievePulse(pulse) && building.within(unit, range) && building.isAdded();
+        return building != null && building.canRecievePulse(pulse, (Pulsec) unit) && building.within(unit, range) && building.isAdded();
     }
 
     @Override

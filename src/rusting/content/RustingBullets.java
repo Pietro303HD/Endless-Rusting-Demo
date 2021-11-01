@@ -2,7 +2,7 @@ package rusting.content;
 
 import arc.func.Cons;
 import arc.graphics.Color;
-import arc.math.Angles;
+import arc.math.*;
 import arc.struct.Seq;
 import arc.util.*;
 import mindustry.Vars;
@@ -45,8 +45,8 @@ public class RustingBullets implements ContentList{
         paveBolt,
         //essentualy small nukes
         craeBalistorm, craeNukestorm,
-    //generator core nuke
-        
+        //generator core nuke
+        infectedGeneratorCoreNuke,
         //boomerangs
         craeLightRoundaboutRight, craeLightRoundaboutLeft, saltyLightRoundaboutRight, saltyLightRoundaboutLeft, denseLightRoundaboutLeft, denseLightRoundaboutRight,
         //glaivs
@@ -1000,6 +1000,42 @@ public class RustingBullets implements ContentList{
             fragBullet = craeWeaver;
         }};
 
+        float bulletRange = 875;
+
+        infectedGeneratorCoreNuke = new BulletSpawnBulletType(0, Float.MAX_VALUE, "none"){
+
+            @Override
+            public void update(Bullet b){
+                {
+                    float bulletFin, bulletFinpow;
+                    if(b.time <= 1100){
+                        bulletFin = (b.time)/1100;
+                        bulletFinpow = Interp.pow3Out.apply(b.fin());
+                        Groups.unit.intersect(b.x - bulletRange * bulletFinpow, b.y - bulletRange * bulletFinpow, bulletRange * 2 * bulletFinpow, bulletRange * 2 * bulletFinpow).each(u -> {
+                            if(b.dst(u) > bulletRange * bulletFinpow) return;
+                            u.damagePierce((u.type.hitSize * u.type.hitSize * u.type.hitSize)/12000 * Time.delta * (1 - bulletFinpow) * b.dst(u)/bulletRange);
+                            u.impulse(Tmp.v1.trns(b.angleTo(u), b.dst(u)/bulletRange * 10));
+                            if(Mathf.chance(0.35)) Fxr.craeWeaverShards.at(u.x, u.y);
+                        });
+                    }
+                };
+            }
+
+            {
+            lifetime = 1700;
+            drawSize = 0;
+
+            //please don't touch any of these, I'm not using Time.run damit
+            hittable = false;
+            reflectable = false;
+            absorbable = false;
+            collides = false;
+            collidesTiles = false;
+            collidesTeam = false;
+            collidesAir = false;
+            collidesGround = false;
+        }};
+
         craeBalistorm = new BounceBulletType(3, 654, "endless-rusting-glave-large"){{
 
             consHit = (b) -> {
@@ -1358,6 +1394,7 @@ public class RustingBullets implements ContentList{
             backColor = Palr.lightstriken;
             status = hailsalilty;
             drag = -0.001f;
+            ammoMultiplier = 1;
             fragBullet = saltyLightRoundaboutRight;
             fragBullets = 3;
             fragVelocityMin = 3;

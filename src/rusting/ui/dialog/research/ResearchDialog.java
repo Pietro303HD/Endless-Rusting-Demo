@@ -4,7 +4,8 @@ import arc.Core;
 import arc.func.Boolf;
 import arc.graphics.Color;
 import arc.math.Mathf;
-import arc.scene.event.*;
+import arc.scene.event.ClickListener;
+import arc.scene.event.HandCursorListener;
 import arc.scene.style.Drawable;
 import arc.scene.style.TextureRegionDrawable;
 import arc.scene.ui.*;
@@ -37,6 +38,7 @@ public class ResearchDialog extends CustomBaseDialog{
     private Table all = new Table();
     private Table information = new Table();
     public Table informationButtons = new Table();
+    public Table currentlySelected = new Table();
 
     public Seq<ResearchType> researchTypes = Seq.with();
     public ObjectMap<String, Seq<ResearchableObject>> categorized = ObjectMap.of();
@@ -55,6 +57,62 @@ public class ResearchDialog extends CustomBaseDialog{
         all.margin(20).marginTop(0f).top().left().setWidth(300);
 
         information.margin(15).marginTop(0).top().left().setWidth(450);
+
+        addButton(Core.atlas.getDrawable("endless-rusting-unlock-block"), (o) -> !o.researched(player.team()), () -> {
+
+            Tile tile = Varsr.research.getCenter(Seq.with(selected.researchTypes().get(0)), player.team()).tile;
+
+            ItemStack[] rCost = selected.getResearchModule().centerResearchRequirements;
+            Table itemsCost = new Table();
+
+            itemsCost.table(table -> {
+
+                //used for columns.
+                int count = 1;
+                int cols = Mathf.clamp((Core.graphics.getWidth() - 30) / (32 + 10), 1, 8);
+
+                for(ItemStack costing: rCost) {
+                    Image itemImage = new Image(new TextureRegionDrawable().set(costing.item.icon(Cicon.medium))).setScaling(Scaling.fit);
+
+                    table.stack(
+                            itemImage,
+                            new Table(t -> {
+                                t.add(Math.min(tile.build.team.core().items.get(costing.item), costing.amount) + "/" + costing.amount);
+                            }).left().margin(1, 3, 2, 0)
+                    ).pad(10f);
+                    if((count++) % cols == 0) table.row();
+                }
+            });
+
+            information.pane(table -> {
+                table.center();
+                table.button("Unlock?", () -> {
+                    Building building = tile.build;
+                    CoreBuild coreBlock = building.team.core();
+                    boolean canResearch = false;
+
+                    //if it's infinite resources or the core has the resources available, continue
+                    if(Vars.state.rules.infiniteResources || coreBlock.items.has(rCost, 1)){
+
+                        //remove items from core
+                        for(int i = 0; i < selected.getResearchModule().centerResearchRequirements.length; i++){
+                            coreBlock.items.remove(selected.getResearchModule().centerResearchRequirements[i]);
+                        }
+
+                        //research the block
+                        building.configure(selected.name());
+                        Sounds.unlock.at(player.x, player.y);
+                        rebuildInformation();
+                    }
+                }).height(75f).width(145);
+                table.image(selected.researchUIcon()).size(8 * 12);
+                table.row();
+                table.add(itemsCost);
+            });
+        }, "Unlock Block");
+        addButton(Core.atlas.getDrawable("endless-rusting-block-information"), (o) -> true, () -> {},  "Information");
+        addButton(Core.atlas.getDrawable("endless-rusting-upgrade-block"), (o) -> true, () -> {}, "Upgrade Block");
+
     }
 
     @Override
@@ -105,47 +163,61 @@ public class ResearchDialog extends CustomBaseDialog{
 
         int size = 650;
 
-        cont.table(s -> {
-            s.image(Icon.zoom).padRight(8);
-            search = s.field(null, text -> rebuildList()).growX().get();
-            search.setMessageText(Core.bundle.get("players.search"));
-            search.addInputDialog();
-        }).fillX().padTop(4).row();
+        cont.pane(pane -> {
+            pane.table(s -> {
+                s.image(Icon.zoom).padRight(8);
+                search = s.field(null, text -> rebuildList()).growX().get();
+                search.setMessageText(Core.bundle.get("players.search"));
+                search.addInputDialog();
+            }).fillX().padTop(4).row();
 
-        //contains the blocks categorized. Rebuild the all table after building this table/updating the text in the searchbar
-        cont.table(Texr.button, leftPane -> {
+            //contains the blocks categorized. Rebuild the all table after building this table/updating the text in the searchbar
+            pane.table(Texr.button, leftPane -> {
 
-            leftPane.table(t -> {
-                t.background(Texr.button);
-                t.add("Researchable Items").growX().top().color(Palr.lightstriken);
+                leftPane.table(t -> {
+                    t.background(Texr.button);
+                    t.add("Researchable Items").growX().top().color(Palr.lightstriken);
+                    t.row();
+                    t.image().width(210).left().pad(5).padLeft(0).padRight(0).height(4).color(Pal.accent);
+                }).top().padTop(0).left();
+
+                leftPane.row();
+
+                leftPane.pane(all).padTop(35).grow().fill();
+
+            }).size(700).left().top().padTop(35).padLeft(15);
+
+            pane.row();
+
+            pane.table(t -> {
+                t.add(currentlySelected).padBottom(10);
                 t.row();
-                t.image().width(210).left().pad(5).padLeft(0).padRight(0).height(4).color(Pal.accent);
-            }).top().padTop(0).left();
+                Image i = new Image();
+                i.setWidth(650);
+                i.setHeight(4);
+                t.add(i).width(650).height(4);
+            }).fillX().height(64).padTop(35).row();
 
-            leftPane.row();
+            //contains all the extra information for the block/unlocking it
+            pane.table(Texr.button, rightPane -> {
 
-            leftPane.pane(all).padTop(35).grow().fill();
+                if(selected == null){
+                    rightPane.add(information);
+                }
 
-        }).size(size).left().top().padTop(35).padLeft(15);
+                else{
+                    rightPane.pane(information).padTop(35).growX().fillX();
+                }
 
-        //contains all the extra information for the block/unlocking it
-        cont.table(Texr.button, rightPane -> {
+                rebuildInformation();
 
-            if(selected == null){
-                rightPane.add(information);
-            }
-            else{
-                rightPane.pane(information).padTop(35).growX().fillX();
-            }
+            }).width(550).height(size).top().padTop(5);
 
-            rebuildInformation();
-
-        }).width(1500 - size - 150).height(size).top().padTop(35).padRight(45).padLeft(150);
-
-        //contains the additional buttons that show up
-        cont.table(Texr.button, rightPane -> {
-            rightPane.pane(informationButtons);
-        }).height(size).width(150).padTop(35);
+            //contains the additional buttons that show up
+            pane.table(Texr.button, rightPane -> {
+                rightPane.pane(informationButtons);
+            }).height(size).width(150).padTop(5).padLeft(0);
+        }).width(1850);
     }
 
     public void rebuildList(){
@@ -231,83 +303,35 @@ public class ResearchDialog extends CustomBaseDialog{
 
         informationButtons.clear();
 
+        currentlySelected.clear();
+
         //setup buttons
 
         if(selected != null){
+            currentlySelected.add("Currently selected: " + selected.localizedName());
+            Image selectedIcon = new Image(selected.researchUIcon()).setScaling(Scaling.fit);
+            currentlySelected.add(selectedIcon).size(32);
+
+            //currently unfinished
             buttons.each((shown, button) -> {
                 if(shown.get(selected)) {
                     informationButtons.add(button);
                     informationButtons.row();
                 }
             });
-
-            //currently unfinished
-            addButton(Core.atlas.getDrawable("endless-rusting-unlock-block"), (o) -> true, () -> {}, "Unlock Block");
-            addButton(Core.atlas.getDrawable("endless-rusting-block-information"), (o) -> true, () -> {},  "Information");
-            addButton(Core.atlas.getDrawable("endless-rusting-upgrade-block"), (o) -> true, () -> {}, "Upgrade Block");
         }
         else{
+            currentlySelected.add("Currently selected: none");
+
             if(Varsr.debug || Mathf.chance(0.1f)) information.add(Varsr.defaultRandomQuotes.random());
             else information.add("[grey]<select something for more information :D>");
             return;
         }
-
-        information.image(selected.researchUIcon());
-
-        if(!selected.researched(player.team())){
-
-            Tile tile = Varsr.research.getCenter(Seq.with(selected.researchTypes().get(0)), player.team()).tile;
-
-            ItemStack[] rCost = selected.getResearchModule().centerResearchRequirements;
-            Table itemsCost = new Table();
-
-            itemsCost.table(table -> {
-
-                //used for columns.
-                int count = 1;
-                int cols = Mathf.clamp((Core.graphics.getWidth() - 30) / (32 + 10), 1, 8);
-
-                for(ItemStack costing: rCost) {
-                    Image itemImage = new Image(new TextureRegionDrawable().set(costing.item.icon(Cicon.medium))).setScaling(Scaling.fit);
-
-                    table.stack(
-                            itemImage,
-                            new Table(t -> {
-                                t.add(Math.min(tile.build.team.core().items.get(costing.item), costing.amount) + "/" + costing.amount);
-                            }).left().margin(1, 3, 2, 0)
-                    ).pad(10f);
-                    if((count++) % cols == 0) table.row();
-                }
-            });
-            information.pane(table -> {
-                table.center();
-                table.button("Unlock?", () -> {
-                    Building building = tile.build;
-                    CoreBuild coreBlock = building.team.core();
-                    boolean canResearch = false;
-
-                    //if it's infinite resources or the core has the resources available, continue
-                    if(Vars.state.rules.infiniteResources || coreBlock.items.has(rCost, 1)){
-
-                        //remove items from core
-                        for(int i = 0; i < selected.getResearchModule().centerResearchRequirements.length; i++){
-                            coreBlock.items.remove(selected.getResearchModule().centerResearchRequirements[i]);
-                        }
-
-                        //research the block
-                        building.configure(selected.name());
-                        Sounds.unlock.at(player.x, player.y);
-                        rebuildInformation();
-                    }
-                }).height(75f).width(145);
-                table.image(selected.researchUIcon()).size(8 * 12);
-                table.row();
-                table.add(itemsCost);
-            });
-        }
     }
 
     public void addButton(Drawable drawable, Boolf<ResearchableObject> shown, Runnable r, String tooltip){
+
+        if(buttons.containsKey(shown)) return;
 
         //add an optional button which can be hidden
         Table addedButton = new Table();
@@ -330,10 +354,6 @@ public class ResearchDialog extends CustomBaseDialog{
                 t.add(tooltip);
             })
         );
-
-        buttonImage.clicked(() -> {
-            r.run();
-        });
 
         addedButton.add(buttonImage).size(80).top();
         addedButton.background(Texr.button);

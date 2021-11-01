@@ -12,8 +12,7 @@ import mindustry.gen.Building;
 import mindustry.graphics.Layer;
 import mindustry.logic.LAccess;
 import mindustry.world.meta.Stat;
-import rusting.interfaces.PrimitiveControlBlock;
-import rusting.interfaces.PulseInstantTransportation;
+import rusting.interfaces.*;
 import rusting.world.blocks.pulse.PulseBlock;
 import rusting.world.blocks.pulse.distribution.PulseCanal.PulseCanalBuild;
 
@@ -82,7 +81,7 @@ public class PulseCanalInput extends PulseBlock {
                 Tmp.v1.trns(rotation * 90, 8);
                 tmpBuilding = Vars.world.buildWorld(x + Tmp.v1.x, y + Tmp.v1.y);
                 if(tmpBuilding instanceof PulseInstantTransportation && tmpBuilding instanceof PulseCanalBuild && pulseModule.pulse >= energyTransmission){
-                    if(((PulseCanalBuild) tmpBuilding).receivePulse(energyTransmission, this)) {
+                    if(((Pulsec) tmpBuilding).receivePulse(energyTransmission, this)) {
                         removePulse(energyTransmission);
                     }
                 }

@@ -121,7 +121,7 @@ public class PulseCanal extends PulseBlock {
         }
 
         @Override
-        public void addPulse(float pulse, Building building) {
+        public void addPulse(float pulse, Pulsec building) {
             if(canalEnding != tile && canalEnding.build instanceof PulseBlockBuild) {
                 ((PulseBlockBuild) canalEnding.build).addPulse(pulse);
                 connected.each(e -> {
@@ -131,18 +131,13 @@ public class PulseCanal extends PulseBlock {
         }
 
         @Override
-        public boolean canRecievePulse(float pulse, Building build) {
-            return (build instanceof PulseCanalInput || build == this) && canRecievePulse(pulse);
+        public boolean canRecievePulse(float pulse, Pulsec build) {
+            return (build instanceof PulseCanalInput || build == this) && canalEnding != tile &&
+                    canalEnding.build instanceof PulseBlockBuild &&
+                    ((PulseBlockBuild) canalEnding.build).canRecievePulse(pulse, this);
         }
-
         //Vars.world.buildWorld(Core.input.mouseWorld().x, Core.input.mouseWorld().y).setupEnding()
 
-        @Override
-        public boolean canRecievePulse(float amount) {
-            return canalEnding != tile &&
-                    canalEnding.build instanceof PulseBlockBuild &&
-                    ((PulseBlockBuild) canalEnding.build).canRecievePulse(amount, this);
-        }
 
         public float trueRotation(){
             return rotation * 90 - 90;

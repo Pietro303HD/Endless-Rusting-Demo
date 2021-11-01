@@ -14,10 +14,11 @@ import mindustry.gen.*;
 import mindustry.graphics.Layer;
 import mindustry.type.StatusEffect;
 import rusting.content.*;
+import rusting.interfaces.Pulsec;
 
 import static mindustry.Vars.state;
 
-public class CraeUnitEntity extends BaseUnitEntity {
+public class CraeUnitEntity extends BaseUnitEntity implements Pulsec {
 
     //blacklisted effects for the sake of the ai
     private static Seq<String> blacklistedStatusEffects = Seq.with("betamindy-amnesia");

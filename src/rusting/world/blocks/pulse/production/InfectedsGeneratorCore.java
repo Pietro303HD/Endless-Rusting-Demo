@@ -20,6 +20,7 @@ import rusting.interfaces.Targeting;
 import static mindustry.Vars.state;
 import static mindustry.Vars.tilesize;
 
+//note: eventually going to merge hardcoded behaviour which is intended as a replacement for scripted sectors onto another class, then give the player generators which can shoot
 public class InfectedsGeneratorCore extends PulseGenerator{
     public TextureRegion heatRegion, topRegion, baseRegion, rotatorRegion, topRotatorRegion, topRotatorRegionHeat;
     public float rotatorSpeed = 3;
@@ -47,6 +48,11 @@ public class InfectedsGeneratorCore extends PulseGenerator{
         rotatorRegion = Core.atlas.find(name + "-rotator");
         topRotatorRegion = Core.atlas.find(name + "-rotator-top");;
         topRotatorRegionHeat = Core.atlas.find(name + "-rotator-top-heat");
+    }
+
+    @Override
+    public boolean hidden() {
+        return true;
     }
 
     public class InfectedsGeneratorCoreBuild extends PulseGeneratorBuild implements ControlBlock, Targeting{
@@ -146,8 +152,9 @@ public class InfectedsGeneratorCore extends PulseGenerator{
         @Override
         public void onDestroyed() {
             super.onDestroyed();
+            if(team != state.rules.waveTeam && state.rules.attackMode) return;
             float range = 250;
-            if(state.rules.damageExplosions) Damage.damage(x, y, tilesize * block.size * range/8f / 2.0f, 12500f);
+            if(state.rules.damageExplosions) Damage.damage(x, y, tilesize * block.size * range/8f / 2.0f, 146f);
             float tx = x, ty = y;
             for (int i = 0; i < 8; i++) {
                 Time.run(i * 4 + Mathf.random(3), () -> {
@@ -161,6 +168,7 @@ public class InfectedsGeneratorCore extends PulseGenerator{
                     Fxr.pulseSmoke.at(tx + Tmp.v1.x, ty + Tmp.v1.y, 0, new Float[]{range * 45, 5f});
                 });
             }
+            RustingBullets.infectedGeneratorCoreNuke.create(null, null, x, y, 0f, Float.MAX_VALUE, 0f, 1f, null);
             Fxr.pulseSmoke.at(x, y, 0, new Float[]{range * 8, 5f});
             Fxr.spontaniumCOMBUSTOMTHATSTHESPELLWHICHMAKESANYONEWHOSAYSITEXPLO.at(x, y, Mathf.random(0, 360));
             Sounds.laserblast.at(x, y, 0.35f);

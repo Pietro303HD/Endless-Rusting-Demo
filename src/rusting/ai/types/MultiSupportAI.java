@@ -17,6 +17,7 @@ import rusting.Varsr;
 import rusting.content.RustingAISwitches;
 import rusting.entities.units.CraeUnitType;
 import rusting.interfaces.PulseBlockc;
+import rusting.interfaces.Pulsec;
 
 import static mindustry.Vars.indexer;
 import static mindustry.Vars.state;
@@ -111,7 +112,7 @@ public class MultiSupportAI extends FlyingAI {
                 else indexer.eachBlock(unit, unit.type.range * 2,
                     other ->
                         other.damaged() ||
-                        canGenPulse && other instanceof PulseBlockc && ((PulseBlockc) other).canRecievePulse(pulseAmount),
+                        canGenPulse && other instanceof PulseBlockc && ((PulseBlockc) other).canRecievePulse(pulseAmount, (Pulsec) unit),
                     other -> {
                         if(blockAlly == null) blockAlly = other;
                     }

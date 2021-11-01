@@ -2,6 +2,7 @@ package rusting.world.blocks.pulse.distribution;
 
 import arc.util.Time;
 import mindustry.world.meta.Stat;
+import rusting.interfaces.Pulsec;
 import rusting.world.blocks.pulse.PulseBlock;
 
 //preferably used for batteries since syphons are unlocked later
@@ -42,8 +43,8 @@ public class ConductivePulseBlock extends PulseBlock {
             proximity().each(l -> {
                 if (pulseModule.pulse > 0 && l instanceof PulseBlockBuild) {
                     float energyTransmitted = Math.min(pulseModule.pulse, energyTransmission);
-                    if (((PulseBlockBuild) l).canRecievePulse(energyTransmitted) && ((PulseBlockBuild) l).chargef() < chargef()) {
-                        ((PulseBlockBuild) l).receivePulse(energyTransmitted, this);
+                    if (((PulseBlockBuild) l).canRecievePulse(energyTransmitted, this) && ((PulseBlockBuild) l).chargef() < chargef()) {
+                        ((Pulsec) l).receivePulse(energyTransmitted, this);
                         removePulse(energyTransmitted);
                     }
                 }

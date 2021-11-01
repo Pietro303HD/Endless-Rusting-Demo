@@ -512,32 +512,32 @@ public class Fxr{
         Drawf.light(e.x, e.y, e.finpow() * 150, Palr.pulseBullet, e.fslope() * e.fslope());
     }),
 
-    spontaniumCOMBUSTOMTHATSTHESPELLWHICHMAKESANYONEWHOSAYSITEXPLO = new Effect(850, 1200, e -> {
+    spontaniumCOMBUSTOMTHATSTHESPELLWHICHMAKESANYONEWHOSAYSITEXPLO = new Effect(1700, 1200, e -> {
 
-        e.scaled(150, b -> {
+        e.scaled(300, b -> {
             Drawf.light(e.x, e.y, b.finpow() * 185, Palr.pulseBullet, b.fout());
         });
 
-        e.scaled(350f, b -> {
+        e.scaled(1100, b -> {
             color(Color.white, Palr.pulseShieldEnd, b.fin());
             stroke(b.fout() * b.fslope() * 6f);
             Lines.circle(b.x, b.y, (b.finpow()) * 975);
-            Draw.z(Layer.effect + 1);
-            Fill.light(e.x, e.y, 60, e.finpow() * 875, Color.clear, Tmp.c1.set(Palr.pulseChargeStart).a(b.fslope()));
+            Draw.z(Layer.flyingUnit + 1);
+            Fill.light(e.x, e.y, 60, e.finpow() * 875, Tmp.c1.set(Palr.darkerPulseChargeStart).a(b.fslope()/4), Tmp.c2.set(Palr.pulseChargeStart).a(b.fslope()));
             Draw.blend(Blending.additive);
-            Fill.light(e.x, e.y, 60, e.finpow() * 875, Color.clear, Tmp.c2.set(Palr.pulseBullet).a(b.fslope() /3));
+            Fill.light(e.x, e.y, 60, e.finpow() * 875, Color.clear, Tmp.c2.set(Color.white).a(b.fslope() /3));
             Draw.blend();
             Drawf.light(e.x, e.y, e.finpow() * 875, Palr.pulseBullet, b.fslope() * b.fslope());
             Draw.z(Layer.effect);
         });
 
-        e.scaled(650, b -> {
+        e.scaled(1300, b -> {
             color(Color.white, Palr.pulseBullet, b.fin());
             stroke(b.fslope() * b.fslope() * 4f);
             Lines.circle(b.x, b.y, (b.finpow()) * 675);
         });
 
-        e.scaled(450, b -> {
+        e.scaled(900, b -> {
             Draw.alpha(Math.min(e.fout() * 2, 1));
             color(Color.white, Palr.pulseShieldEnd, b.fin());
             stroke(b.fslope() * b.fslope() * 4f);
@@ -546,7 +546,7 @@ public class Fxr{
             Lines.circle(b.x, b.y, b.finpow() * 197f);
         });
 
-        e.scaled(125, b -> {
+        e.scaled(250, b -> {
             Draw.alpha(Math.min(e.fout() * 3, 1));
             color(Color.white, Palr.pulseShieldEnd, b.fin());
             stroke(b.fslope() * b.fslope() * 4f + 0.65f);
@@ -578,10 +578,10 @@ public class Fxr{
         Draw.alpha(Math.max(e.fout() * 5, 1));
 
         Draw.blend(Blending.additive);
-        Draw.z(Layer.effect + 1);
+        Draw.z(Layer.flyingUnit + 1);
         Fill.light(e.x, e.y, 45, e.fout() * e.fout() * 150, Tmp.c1.set(Color.white), Tmp.c2.set(Color.clear).a(Math.min(e.fout() * 2, 1)));
-        Draw.blend();
         Draw.z(Layer.effect);
+        Draw.blend();
 
         Fill.circle(e.x, e.y, e.fout() * e.fout() * 165);
         Lines.stroke(e.fout() * 5);

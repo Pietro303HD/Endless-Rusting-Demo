@@ -83,7 +83,7 @@ public class RustingTechTree implements ContentList {
                     });
                 });
 
-                node(pulseCondensary, Seq.with(new DestroyBlocksObjective(ObjectMap.of(pulseCondensary, 1), crystallineCrags), new Research(paileanCorridors), new Produce(melonaleum)), () -> {});
+                node(pulseCondensary, Seq.with(new DestroyBlocksObjective(ObjectMap.of(pulseCondensary, 1), crystallineCrags), new Produce(melonaleum)), () -> {});
 
                 node(archangel, Seq.with(new SectorComplete(abystrikenCrevasse)), () -> {
 
@@ -274,6 +274,12 @@ public class RustingTechTree implements ContentList {
                 node(RustingStatusEffects.fuesin, Seq.with(new Research(RustingStatusEffects.fuesin)), () -> {
 
                 });
+            });
+        });
+
+        extendNode(thermalGenerator, () -> {
+            node(waterBoilerGenerator, Seq.with(new SectorComplete(plantaePresevereDomae)), () -> {
+
             });
         });
 

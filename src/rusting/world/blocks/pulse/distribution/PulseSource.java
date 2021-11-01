@@ -2,6 +2,7 @@ package rusting.world.blocks.pulse.distribution;
 
 import mindustry.gen.Building;
 import rusting.interfaces.PulseBlockc;
+import rusting.interfaces.Pulsec;
 
 import static mindustry.Vars.world;
 
@@ -12,17 +13,12 @@ public class PulseSource extends PulseNode{
 
     public class PulseSourceBuild extends PulseNodeBuild{
         @Override
-        public boolean canRecievePulse(float pulse, Building build) {
-            return false;
-        }
-
-        @Override
         public boolean connectableTo() {
             return false;
         }
 
         @Override
-        public boolean receivePulse(float pulse, Building source) {
+        public boolean receivePulse(float pulse, Pulsec source) {
             return false;
         }
 

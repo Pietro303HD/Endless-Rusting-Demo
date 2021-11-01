@@ -1,5 +1,6 @@
 package rusting.content;
 
+import arc.files.Fi;
 import arc.graphics.Color;
 import arc.struct.*;
 import mindustry.content.*;
@@ -88,7 +89,7 @@ public class RustingBlocks implements ContentList{
         //crafting
         bulasteltForgery, desalinationMixer, cameoCrystallisingBasin, cameoPaintMixer, camaintAmalgamator, cameoHarvestingBasin,
         //defense
-        terraMound, terraMoundLarge, hailsiteBarrier, hailsiteBarrierLarge, wol,
+        terraMound, terraMoundLarge, hailsiteBarrier, hailsiteBarrierLarge, decilitaCyst, decilitaCystLarge, wol,
         //power
         waterBoilerGenerator,
         //drill
@@ -277,6 +278,8 @@ public class RustingBlocks implements ContentList{
             isLiquid = true;
             cacheLayer = CacheLayer.water;
             albedo = 0.5f;
+
+            attributes.set(Attribute.heat, 0.15f);
         }};
 
         sunkenMagmarock = new EffectFloor("sunken-magmarock"){{
@@ -286,6 +289,8 @@ public class RustingBlocks implements ContentList{
             isLiquid = true;
             cacheLayer = CacheLayer.water;
             albedo = 0.5f;
+
+            attributes.set(Attribute.heat, 0.35f);
         }};
 
         fraePlating = new Floor("frae-aged-plating-horizontalin"){{
@@ -558,6 +563,8 @@ public class RustingBlocks implements ContentList{
             consumes.liquid(Liquids.water, 0.1235f);
         }};
 
+        Fi d = new Fi("");
+
         cameoPaintMixer = new ResearchableCrafter("cameo-paint-mixer"){{
             requirements(Category.crafting, with(Items.lead, 145, Items.graphite, 75, Items.titanium, 45, RustingItems.bulastelt, 65));
             centerResearchRequirements(true, ItemStack.with(Items.silicon, 355, RustingItems.halsinte, 135, RustingItems.bulastelt, 65));
@@ -654,6 +661,23 @@ public class RustingBlocks implements ContentList{
             variants = 2;
             absorbLasers = true;
             deathProjectiles = 23;
+        }};
+
+        decilitaCyst = new ProjectileAttackWall("decilita-cyst"){{
+            requirements(Category.defense, with(RustingItems.decilita, 4, RustingItems.bulastelt, 6));
+            size = 1;
+            health = 150 * size * size;
+            variants = 2;
+            deathProjectiles = 3;
+            bullet = deathBullet = RustingBullets.fossilShard;
+        }};
+
+        decilitaCystLarge = new ProjectileAttackWall("decilita-cyst-large"){{
+            requirements(Category.defense, with(RustingItems.decilita, 16, RustingItems.bulastelt, 24));
+            size = 2;
+            health = 150 * size * size;
+            deathProjectiles = 12;
+            bullet = deathBullet = RustingBullets.fossilShard;
         }};
 
         wol = new Wall("wol"){{
@@ -759,6 +783,7 @@ public class RustingBlocks implements ContentList{
             minRequiredPulsePercent = 0.35f;
         }};
 
+        //note: used as a replacement for scripted sector events
         infectedsGeneratorCore = new InfectedsGeneratorCore("infecteds-generator-core"){{
             requirements(Category.power, with(Items.lead, 450, Items.titanium, 650, Items.metaglass, 350, RustingItems.melonaleum, 350, RustingItems.gelChip, 540));
             centerResearchRequirements(true, with(Items.titanium, 1500, Items.metaglass, 2340, RustingItems.gelChip, 950, RustingItems.melonaleum, 1250));
@@ -969,7 +994,6 @@ public class RustingBlocks implements ContentList{
             health = 35 * size * size;
             projectileChanceModifier = 0;
             customConsumes.pulse = 0.25f;
-            cruxInfiniteConsume = true;
             pulseStorage = 70;
             overloadCapacity = 30;
             powerLoss = 0;
@@ -1003,7 +1027,7 @@ public class RustingBlocks implements ContentList{
             burstSpacing = 3;
             inaccuracy = 5;
             customConsumes.pulse = 15;
-            cruxInfiniteConsume = true;
+            cruxInfiniteConsume = false;
             pulseStorage = 70;
             overloadCapacity = 30;
             powerLoss = 0;
@@ -1646,6 +1670,7 @@ public class RustingBlocks implements ContentList{
                 RustingItems.halsinte, RustingBullets.saltyLightGlaive
             );
 
+            ammoPerShot = 4;
             health = 960;
 
             size = 2;
