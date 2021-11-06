@@ -1,11 +1,18 @@
 package rusting.content;
 
+import arc.func.Boolf;
+import arc.struct.ObjectMap;
+import arc.struct.Seq;
+import mindustry.Vars;
+import mindustry.content.StatusEffects;
+import mindustry.core.GameState;
 import mindustry.ctype.ContentList;
-import mindustry.type.SectorPreset;
+import mindustry.gen.Groups;
 import rusting.game.ERSectorPreset;
+import rusting.util.MusicControl.MusicSecController.MusicSecSegment;
 
 public class RustingSectorPresets implements ContentList {
-    public static SectorPreset
+    public static ERSectorPreset
     incipiensGrounds, plantaePresevereDomae, volenChannels, paileanCorridors, saltyShoals, overgrownMines, abystrikenCrevasse, crystallineCrags, pulsatingGroves, sulphuricSea, hangout, preservatory;
     ;
 
@@ -34,6 +41,15 @@ public class RustingSectorPresets implements ContentList {
         saltyShoals = new ERSectorPreset("salty-shoals", RustingPlanets.err, 1){{
             captureWave = 40;
             difficulty = 6;
+
+            musicSecController.musicMap.addAll(
+                    ObjectMap.of(
+                        (Boolf<GameState>) gameState -> gameState.rules.spawns.find(s -> s.effect == StatusEffects.boss && (gameState.wave - s.begin) % s.spacing ==  s.spacing) != null || Groups.unit.find(u -> u.team == Vars.state.rules.defaultTeam && u.hasEffect(StatusEffects.boss)) != null,
+                        Seq.with(new MusicSecSegment(1, true){{
+                            musicChance = 1;
+                        }})
+                    )
+            );
         }};
 
         overgrownMines = new ERSectorPreset("overgrown-mines", RustingPlanets.err, 97){{
@@ -49,6 +65,19 @@ public class RustingSectorPresets implements ContentList {
         crystallineCrags = new ERSectorPreset("crystalline-crags", RustingPlanets.err, 268){{
             captureWave = 40;
             difficulty = 4;
+
+            musicSecController.musicMap.addAll(
+                    ObjectMap.of(
+                        (Boolf<GameState>) gameState -> gameState.wave > 3,
+                        Seq.with(new MusicSecSegment(0, false))
+                    ),
+                    ObjectMap.of(
+                        (Boolf<GameState>) gameState -> gameState.rules.spawns.find(s -> s.effect == StatusEffects.boss && (gameState.wave - s.begin) % s.spacing ==  s.spacing) != null || Groups.unit.find(u -> u.team == Vars.state.rules.defaultTeam && u.hasEffect(StatusEffects.boss)) != null,
+                        Seq.with(new MusicSecSegment(1, true){{
+                            musicChance = 1;
+                        }})
+                    )
+            );
         }};
 
         pulsatingGroves = new ERSectorPreset("pulsating-groves", RustingPlanets.err, 56){{

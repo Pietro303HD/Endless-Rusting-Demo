@@ -33,6 +33,8 @@ public class PulsePoint extends PulseBlock {
         pulseAmount = 0.15f;
         rotateSpeed = 4;
         range = 60;
+        projectileChanceModifier = 0;
+        projectile = null;
     }
 
     public class PulsePointBuild extends PulseBlockBuild{
@@ -66,7 +68,7 @@ public class PulsePoint extends PulseBlock {
             Draw.rect(base, x, y, 0);
 
             Draw.z(Layer.turret);
-            Draw.rect(region, x, y, rotation - 90);
+            Draw.rect(region, x, y, rotation);
 
             if(chargeRegion != Core.atlas.find("error")) {
                 Draw.color(chargeColourStart, chargeColourEnd, chargef());

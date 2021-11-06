@@ -2,11 +2,13 @@ package rusting.entities.bullet;
 
 import arc.Core;
 import arc.struct.Seq;
+import arc.util.pooling.Pools;
 import mindustry.content.Fx;
 import mindustry.entities.Effect;
 import mindustry.entities.Units;
 import mindustry.gen.*;
-import mindustry.graphics.Trail;
+import rusting.graphics.JagedTrail;
+import rusting.graphics.PoolableTrail;
 
 public class BounceBulletType extends ConsBulletType {
     //how much of it's velocity is kept on bounce
@@ -21,6 +23,9 @@ public class BounceBulletType extends ConsBulletType {
     //How thick trail is
     public float trailWidth = 1;
     public float range = -1;
+
+    public boolean jagged = false;
+
 
     public boolean clearBounce = true;
     //hwo many ticks inbetween collisions being cleared. Set around 15/20 or lower to make bullet reliable in low fps.
@@ -44,11 +49,12 @@ public class BounceBulletType extends ConsBulletType {
 
     public void init(Bullet b) {
         super.init(b);
-        b.data = Seq.with(Seq.with(new Trail(trailLength)), new Bounces(), null);
+        b.data = Seq.with(Seq.with(Pools.obtain(PoolableTrail.class, () -> new PoolableTrail(trailLength))), new Bounces(), null);
+        if(jagged) trails(b).add(Pools.obtain(JagedTrail.class, () -> new JagedTrail(trailLength/2, hitSize/2)));
     }
 
-    public Seq<Trail> trails(Bullet b){
-        return (Seq<Trail>) ((Seq) b.data).get(0);
+    public Seq<PoolableTrail> trails(Bullet b){
+        return (Seq<PoolableTrail>) ((Seq) b.data).get(0);
     }
 
     public Bounces bounces(Bullet b){

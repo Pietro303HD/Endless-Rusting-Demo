@@ -29,6 +29,7 @@ import rusting.game.ScriptedSectorHandler;
 import rusting.interfaces.PulseCanalInput;
 import rusting.interfaces.PulseInstantTransportation;
 import rusting.ui.RustingUI;
+import rusting.util.MusicControl;
 import rusting.world.Worldr;
 import rusting.world.blocks.pulse.distribution.PulseCanal.PulseCanalBuild;
 import rusting.world.format.holder.FormatHolder;
@@ -54,6 +55,7 @@ public class Varsr implements Loadable {
     public static RustingResearch research = new RustingResearch();
     public static ScriptedSectorHandler sectors = new ScriptedSectorHandler();
     public static Worldr world = new Worldr();
+    public static MusicControl music = new MusicControl();
     public static String username;
     public static String defaultUsername;
     public static boolean debug = false;
@@ -142,6 +144,7 @@ public class Varsr implements Loadable {
                 if(Mathf.chance(0.15f * Time.delta)) Fxr.blackened.at(b.x, b.y);
                 b.time += Time.delta;
             });
+            music.update();
         });
 
         Log.info("Loaded Varsr");
@@ -259,7 +262,6 @@ public class Varsr implements Loadable {
     }
 
     public void stateChangeBegin() {
-
     }
 
     public void stateChangeEnd() {

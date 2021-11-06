@@ -83,7 +83,17 @@ public class RustingTechTree implements ContentList {
                     });
                 });
 
-                node(pulseCondensary, Seq.with(new DestroyBlocksObjective(ObjectMap.of(pulseCondensary, 1), crystallineCrags), new Produce(melonaleum)), () -> {});
+                node(pulseGraphiteForge, Seq.with(new DestroyBlocksObjective(ObjectMap.of(pulseGraphiteForge, 1), paileanCorridors), new Research(pulseCollector)), () -> {
+                    node(pulseGelPress, Seq.with(), () -> {
+
+                    });
+                    node(pulseMelomaeMixer, Seq.with(new SectorComplete(pulsatingGroves)), () -> {
+                        node(pulseCondensary, Seq.with(new DestroyBlocksObjective(ObjectMap.of(pulseCondensary, 1), crystallineCrags), new Produce(melonaleum)), () -> {
+
+                        });
+                    });
+
+                });
 
                 node(archangel, Seq.with(new SectorComplete(abystrikenCrevasse)), () -> {
 

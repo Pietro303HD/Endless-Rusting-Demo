@@ -106,7 +106,7 @@ public class RustingBlocks implements ContentList{
         //Siphon
         pulseSiphon,
         //crafting
-        pulseCondensary, pulseMelomaeMixer, pulseGelPress,
+        pulseGraphiteForge, pulseCondensary, pulseMelomaeMixer, pulseGelPress,
         //Walls
         pulseBarrier, pulseBarrierLarge,
         //Research
@@ -750,7 +750,7 @@ public class RustingBlocks implements ContentList{
         //Generates pulse. Requires some sort of Siphon to collect the pulse.
         pulseCollector = new PulseGenerator("pulse-collector"){{
             requirements(Category.power, with(Items.copper, 35, Items.coal, 15, Items.titanium, 10));
-            centerResearchRequirements(true, with(Items.copper, 100,  Items.coal, 50, Items.titanium, 25));
+            centerResearchRequirements(false, with());
             size = 1;
             canOverload = false;
             configurable = false;
@@ -840,7 +840,7 @@ public class RustingBlocks implements ContentList{
         //stores power for later usage less effectively than nodes, but stores more power. Transmits power to blocks nearby with less pulse power percentage.
         pulseResonator = new ConductivePulseBlock("pulse-resonator"){{
             requirements(Category.power, with(Items.copper, 35, Items.silicon, 20, Items.titanium, 10));
-            centerResearchRequirements(true, with(Items.copper, 175, Items.coal, 45, Items.silicon, 90, Items.titanium, 75));
+            centerResearchRequirements(false, with());
             health = 350;
             size = 1;
             powerLoss = 0.00425f;
@@ -851,8 +851,8 @@ public class RustingBlocks implements ContentList{
         }};
 
         pulseSiphon = new PulseSiphon("pulse-siphon"){{
-            requirements(Category.power, with(Items.copper, 10, Items.silicon, 20, Items.titanium, 15));
-            centerResearchRequirements(true, with(Items.copper, 125,  Items.coal, 65, Items.graphite, 45, Items.titanium, 35));
+            requirements(Category.power, with(Items.copper, 10, Items.graphite, 20, Items.titanium, 15));
+            centerResearchRequirements(false, with());
             size = 1;
             powerLoss = 0.000035f;
             siphonAmount = 5;
@@ -861,6 +861,26 @@ public class RustingBlocks implements ContentList{
             pulseStorage = 35;
             laserRange = 6;
             canOverload = false;
+        }};
+
+        pulseGraphiteForge = new PulseGenericCrafter("pulse-graphite-forge"){{
+            requirements(Category.crafting, with(Items.lead, 65, Items.graphite, 25, Items.titanium, 35, Items.metaglass, 25));
+            centerResearchRequirements(false, with(Items.coal, 125, Items.silicon, 45, Items.metaglass, 65, Items.titanium, 85));
+            drawer = new DrawPulseLiquidCrafter();
+            hasLiquids = true;
+            size = 2;
+            itemCapacity = 30;
+            powerLoss = 0.05f;
+            pulseStorage = 240;
+            canOverload = false;
+            minRequiredPulsePercent = 0.45f;
+            customConsumes.pulse = 55;
+            consumes.liquid(Liquids.water, 0.075f);
+            consumes.items(ItemStack.with(Items.coal, 15, Items.sand, 3));
+
+            craftTime = 285;
+
+            outputItem = new ItemStack(Items.graphite, 9);
         }};
 
         pulseCondensary = new PulseCondensary("pulse-melonaleum-condensery"){{
@@ -882,7 +902,7 @@ public class RustingBlocks implements ContentList{
         }};
 
         pulseMelomaeMixer = new PulseGenericCrafter("pulse-melomae-mixer"){{
-            requirements(Category.crafting, with(Items.lead, 80, Items.graphite, 55, Items.titanium, 15, Items.metaglass, 45));
+            requirements(Category.crafting, with(Items.lead, 80, Items.titanium, 15, Items.metaglass, 45));
             centerResearchRequirements(true, with(Items.coal, 125, Items.silicon, 45, Items.metaglass, 65, Items.titanium, 85));
             drawer = new DrawPulseLiquidMixer();
             hasLiquids = true;
@@ -891,7 +911,7 @@ public class RustingBlocks implements ContentList{
             pulseStorage = 150;
             canOverload = false;
             minRequiredPulsePercent = 0.45f;
-            customConsumes.pulse = 5;
+            customConsumes.pulse = 6.5f;
             consumes.liquid(Liquids.water, 0.16f);
             craftTime = 15;
             liquidCapacity = 75;
@@ -1339,7 +1359,7 @@ public class RustingBlocks implements ContentList{
 
 
         pilink = new HarpoonTurret("pilink") {{
-            requirements(Category.turret, with(Items.lead, 35, RustingItems.bulastelt, 15, RustingItems.halsinte, 10));
+            requirements(Category.turret, with(Items.lead, 35, RustingItems.bulastelt, 25));
             size = 1;
             health = 250;
             reloadTime = 115;

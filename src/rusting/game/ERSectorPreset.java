@@ -8,13 +8,20 @@ import mindustry.game.EventType;
 import mindustry.type.Planet;
 import mindustry.type.SectorPreset;
 import rusting.Varsr;
+import rusting.util.MusicControl.MusicSecController;
 
 public class ERSectorPreset extends SectorPreset {
     private boolean unlockedInCampaign;
+    //the earlier that a Seq of music is added, the more likely it'll play
+    public MusicSecController musicSecController = new MusicSecController();
+    public float musicChance = 0.0015f;
 
     public ERSectorPreset(String name, Planet planet, int sector) {
         super(name, planet, sector);
-        Events.on(EventType.ClientLoadEvent.class, e -> loadBundles());
+        Varsr.music.musicSectors.add(this);
+        Events.on(EventType.ClientLoadEvent.class, e -> {
+            loadBundles();
+        });
     }
 
     @Override

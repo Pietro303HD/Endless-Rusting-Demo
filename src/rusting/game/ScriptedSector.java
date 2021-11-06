@@ -2,9 +2,8 @@ package rusting.game;
 
 import arc.struct.Seq;
 import mindustry.type.Planet;
-import mindustry.type.SectorPreset;
 
-public class ScriptedSector extends SectorPreset {
+public class ScriptedSector extends ERSectorPreset {
 
     //set after playing map, read only when necessary
     public final Seq<SectorEventNode> nodes = new Seq();

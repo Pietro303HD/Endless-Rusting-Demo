@@ -33,7 +33,11 @@ public class EndlessRusting extends Mod{
     private static Seq<StatusEffect> whitelistedStuns = Seq.with(StatusEffects.unmoving);
 
     public EndlessRusting(){
-        Events.on(FileTreeInitEvent.class, e -> ModSounds.load());
+        Varsr.music.init();
+
+        Events.on(FileTreeInitEvent.class, e -> {
+            ModSounds.load();
+        });
         Core.settings.defaults("er.drawtrails", true);
         Core.settings.defaults("er.advancedeffects", true);
 
