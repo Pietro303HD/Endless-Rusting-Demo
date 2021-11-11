@@ -25,7 +25,7 @@ import rusting.type.statusEffect.CrystalStatusEffect;
 
 public class EndlessRusting extends Mod{
 
-    public static String modname = "endless-rusting";
+    public static String modname = "endless-rusting-demo";
 
     public static RustedSettingAdder settingAdder = new RustedSettingAdder();
     private static Seq<UnitType> immunityUnits;
