@@ -89,7 +89,7 @@ public class RustingBlocks implements ContentList{
         //crafting
         bulasteltForgery, desalinationMixer, cameoCrystallisingBasin, cameoPaintMixer, camaintAmalgamator, cameoHarvestingBasin,
         //defense
-        terraMound, terraMoundLarge, hailsiteBarrier, hailsiteBarrierLarge, decilitaCyst, decilitaCystLarge, wol,
+        terraMound, terraMoundLarge, wol,
         //power
         waterBoilerGenerator,
         //drill
