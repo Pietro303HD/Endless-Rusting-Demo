@@ -646,40 +646,6 @@ public class RustingBlocks implements ContentList{
             insulated = true;
         }};
 
-        hailsiteBarrier = new ProjectileAttackWall("hailsite-barrier"){{
-            requirements(Category.defense, with(RustingItems.taconite, 3, RustingItems.halsinte, 7));
-            size = 1;
-            health = 355 * size * size;
-            variants = 2;
-            absorbLasers = true;
-        }};
-
-        hailsiteBarrierLarge = new ProjectileAttackWall("hailsite-barrier-large"){{
-            requirements(Category.defense, with(RustingItems.taconite, 12, RustingItems.halsinte, 28));
-            size = 2;
-            health = 355 * size * size;
-            variants = 2;
-            absorbLasers = true;
-            deathProjectiles = 23;
-        }};
-
-        decilitaCyst = new ProjectileAttackWall("decilita-cyst"){{
-            requirements(Category.defense, with(RustingItems.decilita, 4, RustingItems.bulastelt, 6));
-            size = 1;
-            health = 150 * size * size;
-            variants = 2;
-            deathProjectiles = 3;
-            bullet = deathBullet = RustingBullets.fossilShard;
-        }};
-
-        decilitaCystLarge = new ProjectileAttackWall("decilita-cyst-large"){{
-            requirements(Category.defense, with(RustingItems.decilita, 16, RustingItems.bulastelt, 24));
-            size = 2;
-            health = 150 * size * size;
-            deathProjectiles = 12;
-            bullet = deathBullet = RustingBullets.fossilShard;
-        }};
-
         wol = new Wall("wol"){{
             requirements(Category.defense, with(Items.coal, 24, RustingItems.taconite, 12, RustingItems.bulastelt, 4));
             size = 1;
