@@ -38,25 +38,6 @@ public class RustingSectorPresets implements ContentList {
             difficulty = 3;
         }};
 
-        saltyShoals = new ERSectorPreset("salty-shoals", RustingPlanets.err, 1){{
-            captureWave = 40;
-            difficulty = 6;
-
-            musicSecController.musicMap.addAll(
-                    ObjectMap.of(
-                        (Boolf<GameState>) gameState -> gameState.rules.spawns.find(s -> s.effect == StatusEffects.boss && (gameState.wave - s.begin) % s.spacing ==  s.spacing) != null || Groups.unit.find(u -> u.team == Vars.state.rules.defaultTeam && u.hasEffect(StatusEffects.boss)) != null,
-                        Seq.with(new MusicSecSegment(1, true){{
-                            musicChance = 1;
-                        }})
-                    )
-            );
-        }};
-
-        overgrownMines = new ERSectorPreset("overgrown-mines", RustingPlanets.err, 97){{
-            captureWave = 65;
-            difficulty = 8;
-        }};
-
         abystrikenCrevasse = new ERSectorPreset("abystriken-crevasse", RustingPlanets.err, 25){{
             captureWave = 38;
             difficulty = 4;

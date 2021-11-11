@@ -46,18 +46,6 @@ public class RustingTechTree implements ContentList {
 
         extendNode(coreShard, () -> {
             node(pulseResearchCenter, Seq.with(new SectorComplete(paileanCorridors)), () -> {
-                node(fraeResarchCenter, Seq.with(new Produce(RustingItems.melonaleum), new SectorComplete(overgrownMines)), () -> {
-                    node(cameoCrystallisingBasin, () -> {
-                        node(cameoPaintMixer, Seq.with(new Produce(RustingLiquids.cameaint)), () -> {
-                            nodeProduce(RustingLiquids.cameaint, () -> {
-
-                            });
-                            node(camaintAmalgamator, Seq.with(), () -> {
-
-                            });
-                        });
-                    });
-                });
                 node(pulseCollector, Seq.with(new SectorComplete(abystrikenCrevasse)), () -> {
 
                     node(pulseNode, () -> {
@@ -92,7 +80,6 @@ public class RustingTechTree implements ContentList {
 
                         });
                     });
-
                 });
 
                 node(archangel, Seq.with(new SectorComplete(abystrikenCrevasse)), () -> {
@@ -145,10 +132,6 @@ public class RustingTechTree implements ContentList {
         extendNode(copperWall, () -> {
             node(terraMound, Seq.with(new Produce(RustingItems.taconite)), () -> {
                 node(terraMoundLarge, () -> {
-
-                });
-
-                node(hailsiteBarrier, Seq.with(new DestroyBlocksObjective(ObjectMap.of(hailsiteBarrier, 15, hailsiteBarrierLarge, 3), saltyShoals)), () -> {
 
                 });
             });
@@ -296,7 +279,7 @@ public class RustingTechTree implements ContentList {
         extendNode(groundZero,  () -> {
             node(incipiensGrounds, () -> {
                 node(preservatory, Seq.with(new SectorComplete(paileanCorridors), new Research(terraConveyor)), () -> {
-                    node(hangout, Seq.with(new SettingLockedObjective("settings.er.teleporterbuilt", "Finish a relic of the old times, the Pulse Teleporter.")), () -> {
+                    node(hangout, Seq.with(new SettingLockedObjective("settings.er.teleporterbuilt", "Coming Soon!")), () -> {
 
                     });
                 });
@@ -314,11 +297,7 @@ public class RustingTechTree implements ContentList {
                                 return Varsr.username + ", defeat and destroy the bases listed above, and your final campaign challenge (For now) in the mod awaits.";
                             }
                         }), () -> {
-                            node(saltyShoals, Seq.with(new SectorComplete(sulphuricSea), new Research(RustingItems.halsinte)), () -> {
-                                node(overgrownMines, Seq.with(new SectorComplete(saltyShoals), new Research(RustingItems.cameoShardling)), () -> {
 
-                                });
-                            });
                         });
                     });
                 });
