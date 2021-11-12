@@ -58,7 +58,7 @@ public class RustingBlocks implements ContentList{
         capsuleCenterTest,
         //environment
         //liquids
-        melainLiquae, coroLiquae, impurenBurneLiquae, impurenBurneLiquaeDeep, classemLiquae,
+        melainLiquae, coroLiquae, classemLiquae,
         //sunken metal floor
         sunkenMetalFloor, sunkenMetalFloor2, sunkenMetalFloor3, sunkenBasalt, sunkenHotrock, sunkenMagmarock,
         //floor
@@ -191,31 +191,6 @@ public class RustingBlocks implements ContentList{
             isLiquid = true;
             cacheLayer = CacheLayer.water;
             albedo = 0.35f;
-        }};
-
-        impurenBurneLiquae = new DamagingFloor("impuren-burnen-liquae"){{
-            speedMultiplier = 1.34f;
-            variants = 0;
-            status = StatusEffects.burning;
-            statusDuration = 15;
-            liquidDrop = null;
-            isLiquid = true;
-            cacheLayer = CacheLayer.water;
-            albedo = 0.65f;
-            damage = 0.055f;
-        }};
-
-        impurenBurneLiquaeDeep = new DamagingFloor("impuren-burnen-liquae-deep"){{
-            speedMultiplier = 1.34f;
-            variants = 0;
-            status = StatusEffects.burning;
-            statusDuration = 15;
-            liquidDrop = null;
-            isLiquid = true;
-            drownTime = 350;
-            cacheLayer = CacheLayer.water;
-            albedo = 0.65f;
-            damage = 0.075f;
         }};
 
         classemLiquae = new Floor("classem-liquae"){{

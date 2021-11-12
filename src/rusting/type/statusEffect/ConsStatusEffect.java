@@ -4,7 +4,7 @@ import arc.func.Cons2;
 import mindustry.gen.Unit;
 import mindustry.type.StatusEffect;
 
-public class ConsStatusEffect extends StatusEffect {
+public class ConsStatusEffect extends ERStatusEffect {
 
     public Cons2<Unit, Float> updateCons;
 

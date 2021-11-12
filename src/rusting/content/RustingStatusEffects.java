@@ -69,24 +69,23 @@ public class RustingStatusEffects implements ContentList {
 
         amberstriken = new CrystalStatusEffect("amberstriken"){{
             speedMultiplier = 0.35F;
-            transitionDamage = 10f;
+            transitionDamage = 35f;
             hitSizeMax = 16;
             effect = Fx.plasticburn;
             init(() -> {
-                if(Version.number > 6) return;
-                affinity(StatusEffects.burning, ((unit, time, newTime, result) -> {
+                transitioning(StatusEffects.burning, ((unit, time, newTime) -> {
                     unit.damagePierce(transitionDamage);
                     unit.apply(umbrafliction, time * 3);
                     Fx.placeBlock.at(unit.x + Mathf.range(unit.bounds() / 2f), unit.y + Mathf.range(unit.bounds() / 2f));
-                    result.set(amberstriken, 0);
+                    unit.unapply(this);
                 }));
-                affinity(umbrafliction, ((unit, time, newTime, result) -> {
+                transitioning(umbrafliction, ((unit, time, newTime) -> {
                     unit.damagePierce(transitionDamage/3);
-                    result.set(amberstriken, 0);
+                    unit.unapply(amberstriken);
                 }));
-                affinity(StatusEffects.blasted, ((unit, time, newTime, result) -> {
+                transitioning(StatusEffects.blasted, ((unit, time, newTime) -> {
                     unit.damagePierce(transitionDamage);
-                    result.set(amberstriken, 0);
+                    unit.unapply(this);
                 }));
             });
             disarm = false;
@@ -98,24 +97,22 @@ public class RustingStatusEffects implements ContentList {
             hitSizeMax = 21;
             effect = Fxr.blackened;
             init(() -> {
-                if(Version.number > 6) return;
-                affinity(StatusEffects.blasted, ((unit, time, newTime, result) -> {
+                transitioning(StatusEffects.blasted, ((unit, time, newTime) -> {
                     unit.damagePierce(transitionDamage);
-                    result.set(umbrafliction, 0);
+                    unit.unapply(this);
                 }));
             });
             disarm = false;
         }};
 
-        hailsalilty = new StatusEffect("hailsalilty"){{
+        hailsalilty = new ERStatusEffect("hailsalilty"){{
             effect = Fxr.salty;
             init(() -> {
-                if(Version.number > 6) return;
-                affinity(StatusEffects.wet, ((unit, time, newTime, result) -> {
+                transitioning(StatusEffects.wet, ((unit, time, newTime) -> {
                     unit.damagePierce(transitionDamage);
                     unit.apply(StatusEffects.corroded, time * 3);
                     Fx.plasticburn.at(unit.x + Mathf.range(unit.bounds() / 2f), unit.y + Mathf.range(unit.bounds() / 2f));
-                    result.set(amberstriken, 0);
+                    unit.unapply(this);
                 }));
             });
             disarm = false;
@@ -181,7 +178,7 @@ public class RustingStatusEffects implements ContentList {
             damageMultiplier = 0.92f;
             effect = Fx.plasticburn;
             effectChance = 0.025f;
-            transitionDamage = 6;
+            transitionDamage = 15;
 
             updateCons = (unit, time) -> {
                 if(unit.damaged() && unit.healthf() > 0.15f && unit.healthf() < 0.85f) unit.damagePierce(Math.min((unit.type.health - unit.health)/60, Math.min(10/60f, unit.health / 2500)) * Time.delta);
@@ -189,18 +186,17 @@ public class RustingStatusEffects implements ContentList {
             };
 
             init(() -> {
-                if(Version.number > 6) return;
-                affinity(StatusEffects.burning, ((unit, time, newTime, result) -> {
-                    unit.damagePierce(transitionDamage);
+                transitioning(StatusEffects.burning, ((unit, time, newTime) -> {
+                    unit.damagePierce(transitionDamage/15);
                     unit.apply(StatusEffects.corroded, time * 3);
+                    unit.unapply(this);
                     Fx.burning.at(unit.x + Mathf.range(unit.bounds() / 2f), unit.y + Mathf.range(unit.bounds() / 2f));
                 }));
-                affinity(StatusEffects.corroded, ((unit, time, newTime, result) -> {
-                    unit.damagePierce(transitionDamage);
+                transitioning(StatusEffects.corroded, ((unit, time, newTime) -> {
+                    unit.damagePierce(transitionDamage/60);
                     Fx.plasticburn.at(unit.x + Mathf.range(unit.bounds() / 2f), unit.y + Mathf.range(unit.bounds() / 2f));
                 }));
             });
-
         }};
 
         potassiumDeficiency = new ConsStatusEffect("potassium-deficiency"){{
@@ -208,7 +204,7 @@ public class RustingStatusEffects implements ContentList {
             dragMultiplier = 1.65f;
             buildSpeedMultiplier = 0.35f;
             damageMultiplier = 0.85f;
-            
+
             effect = Fx.plasticburn;
             effectChance = 0.025f;
         }};
@@ -222,11 +218,9 @@ public class RustingStatusEffects implements ContentList {
 
                 opposite(StatusEffects.wet);
 
-                if(Version.number > 6) return;
-                affinity(StatusEffects.burning, ((unit, time, newTime, result) -> {
+                transitioning(StatusEffects.burning, ((unit, time, newTime) -> {
                     unit.damagePierce(transitionDamage);
                     unit.apply(StatusEffects.corroded, time * 3);
-                    result.set(shieldShatter, time);
                 }));
             });
 
@@ -248,18 +242,16 @@ public class RustingStatusEffects implements ContentList {
             effect = Fx.bubble;
             init(() -> {
                 if(Version.number > 6) return;
-                affinity(amberstriken, ((unit, time, newTime, result) -> {
+                transitioning(amberstriken, ((unit, time, newTime) -> {
                     unit.damagePierce(transitionDamage);
                     unit.damage(amberstriken.transitionDamage);
                     Fx.plasticburn.at(unit.x, unit.y);
-                    result.set(fragmentaein, 0);
                     unit.unapply(amberstriken);
                 }));
-                affinity(umbrafliction, ((unit, time, newTime, result) -> {
+                transitioning(umbrafliction, ((unit, time, newTime) -> {
                     unit.damagePierce(transitionDamage);
                     unit.damage(umbrafliction.transitionDamage);
                     Fxr.blackened.at(unit.x, unit.y);
-                    result.set(fragmentaein, 0);
                     unit.unapply(amberstriken);
                 }));
             });
