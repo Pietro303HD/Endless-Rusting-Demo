@@ -21,6 +21,7 @@ import rusting.graphics.GraphicEffects;
 import rusting.interfaces.Targeting;
 import rusting.math.Mathr;
 
+import static rusting.EndlessRusting.modname;
 import static rusting.content.RustingStatusEffects.*;
 
 public class RustingBullets implements ContentList{
@@ -162,7 +163,7 @@ public class RustingBullets implements ContentList{
         };
 
         //low speed to make targeting work
-        horizonInstalt = new InstantBounceBulletType(0.001f, 12, "endless-rusting-blunt-bullet"){{
+        horizonInstalt = new InstantBounceBulletType(0.001f, 12, modname + "-blunt-bullet"){{
             width = 7;
             height = 8;
             lifetime = 54;
@@ -181,7 +182,7 @@ public class RustingBullets implements ContentList{
             bounceCap = 3;
         }};
 
-        nummingInstalt = new InstantBounceBulletType(0.001f,  7.5f, "endless-rusting-blunt-bullet"){{
+        nummingInstalt = new InstantBounceBulletType(0.001f,  7.5f, modname + "-blunt-bullet"){{
             width = 7;
             height = 8;
             lifetime = 54;
@@ -199,7 +200,7 @@ public class RustingBullets implements ContentList{
             bounceCap = 4;
         }};
 
-        timelessInstalt = new InstantBounceBulletType(0.001f, 38, "endless-rusting-blunt-bullet"){{
+        timelessInstalt = new InstantBounceBulletType(0.001f, 38, modname + "-blunt-bullet"){{
             width = 7;
             height = 8;
             lifetime = 192;
@@ -216,7 +217,7 @@ public class RustingBullets implements ContentList{
             bounceCap = 2;
         }};
 
-        gunnersInstalt = new InstantBounceBulletType(0.001f, 38, "endless-rusting-blunt-bullet"){{
+        gunnersInstalt = new InstantBounceBulletType(0.001f, 38, modname + "-blunt-bullet"){{
             width = 7;
             height = 8;
             lifetime = 192;
@@ -685,7 +686,7 @@ public class RustingBullets implements ContentList{
             shrinkX = shrinkY = -2f;
         }};
 
-        lightfractureTitanim = new RandspriteBulletType(7.5f, 48, "endless-rusting-lightsword", 4){{
+        lightfractureTitanim = new RandspriteBulletType(7.5f, 48, modname + "-lightsword", 4){{
             hitEffect = Fx.hitFuse;
             knockback = 0.15f;
             pierce = true;
@@ -705,7 +706,7 @@ public class RustingBullets implements ContentList{
             ammoMultiplier = 6;
         }};
 
-        lightfractureBulat = new RandspriteBulletType(6.6f, 35, "endless-rusting-lightsword", 4){{
+        lightfractureBulat = new RandspriteBulletType(6.6f, 35, modname + "-lightsword", 4){{
             hitEffect = Fx.hitFuse;
             knockback = 1.35f;
             lifetime = 45;
@@ -968,7 +969,7 @@ public class RustingBullets implements ContentList{
 
         //let bullet = Vars.content.bullets().find(b => b.splashDamage == 175); UnitTypes.gamma.weapons.each(w => w.bullet = bullet);
 
-        craeNukestorm = new BounceBulletType(9, 154, "endless-rusting-glave-large"){{
+        craeNukestorm = new BounceBulletType(9, 154, modname + "-glave-large"){{
             hitShake = 12;
             hitEffect = Fxr.craeNukeHit;
             splashDamage = 175;
@@ -1036,7 +1037,7 @@ public class RustingBullets implements ContentList{
             collidesGround = false;
         }};
 
-        craeBalistorm = new BounceBulletType(3, 654, "endless-rusting-glave-large"){{
+        craeBalistorm = new BounceBulletType(3, 654, modname + "-glave-large"){{
 
             consHit = (b) -> {
                 RustingBullets.boltingVortex.create(b.owner, b.team, b.x, b.y, b.rotation());
@@ -1078,7 +1079,7 @@ public class RustingBullets implements ContentList{
 
         }};
 
-        denseLightRoundaboutRight =  new BoomerangBulletType(1, 15, "endless-rusting-boomerang"){{
+        denseLightRoundaboutRight =  new BoomerangBulletType(1, 15, modname + "-boomerang"){{
 
             other = denseLightRoundaboutLeft;
             width = 16;
@@ -1104,7 +1105,7 @@ public class RustingBullets implements ContentList{
             drag = -0.001f;
         }};
 
-        saltyLightRoundaboutRight = new BoomerangBulletType(2, 15, "endless-rusting-boomerang"){{
+        saltyLightRoundaboutRight = new BoomerangBulletType(2, 15, modname + "-boomerang"){{
 
             other = saltyLightRoundaboutLeft;
 
@@ -1135,7 +1136,7 @@ public class RustingBullets implements ContentList{
             fragBullets = 2;
         }};
 
-        saltyLightRoundaboutLeft = new BoomerangBulletType(2, 15, "endless-rusting-boomerang"){{
+        saltyLightRoundaboutLeft = new BoomerangBulletType(2, 15, modname + "-boomerang"){{
 
             other = saltyLightRoundaboutRight;
 
@@ -1166,7 +1167,7 @@ public class RustingBullets implements ContentList{
             fragBullets = 2;
         }};
 
-        denseLightRoundaboutLeft = new BoomerangBulletType(1, 15, "endless-rusting-boomerang"){{
+        denseLightRoundaboutLeft = new BoomerangBulletType(1, 15, modname + "-boomerang"){{
 
             other = denseLightRoundaboutRight;
 
@@ -1193,7 +1194,7 @@ public class RustingBullets implements ContentList{
             drag = -0.001f;
         }};
 
-        craeLightRoundaboutRight = new BoomerangBulletType(2, 11, "endless-rusting-boomerang"){{
+        craeLightRoundaboutRight = new BoomerangBulletType(2, 11, modname + "-boomerang"){{
 
             other = craeLightRoundaboutLeft;
 
@@ -1219,7 +1220,7 @@ public class RustingBullets implements ContentList{
             drag = -0.001f;
         }};
 
-        craeLightRoundaboutLeft = new BoomerangBulletType(2, 8, "endless-rusting-boomerang"){{
+        craeLightRoundaboutLeft = new BoomerangBulletType(2, 8, modname + "-boomerang"){{
 
             other = craeLightRoundaboutRight;
 
@@ -1245,7 +1246,7 @@ public class RustingBullets implements ContentList{
             drag = -0.001f;
         }};
 
-        craeLightGlaive = new BoomerangBulletType(1, 25, "endless-rusting-glave"){{
+        craeLightGlaive = new BoomerangBulletType(1, 25, modname + "-glave"){{
 
             homingPower = 0.025f;
 
@@ -1283,7 +1284,7 @@ public class RustingBullets implements ContentList{
             drag = -0.001f;
         }};
 
-        denseLightGlaive = new BoomerangBulletType(1, 45, "endless-rusting-glave"){{
+        denseLightGlaive = new BoomerangBulletType(1, 45, modname + "-glave"){{
             homingPower = 0.005f;
 
             consDespawned = consHit;
@@ -1311,7 +1312,7 @@ public class RustingBullets implements ContentList{
             drag = -0.001f;
         }};
 
-        craeLightGlaiveRight = new BoomerangBulletType(2, 15, "endless-rusting-glave"){{
+        craeLightGlaiveRight = new BoomerangBulletType(2, 15, modname + "-glave"){{
             other = craeLightGlaiveLeft;
 
             width = 9;
@@ -1335,7 +1336,7 @@ public class RustingBullets implements ContentList{
             drag = -0.001f;
         }};
 
-        craeLightGlaiveLeft = new BoomerangBulletType(2, 15, "endless-rusting-glave"){{
+        craeLightGlaiveLeft = new BoomerangBulletType(2, 15, modname + "-glave"){{
             other = craeLightGlaiveRight;
 
             width = 9;
@@ -1360,7 +1361,7 @@ public class RustingBullets implements ContentList{
             drag = -0.001f;
         }};
 
-        saltyLightGlaive = new BoomerangBulletType(3f, 75, "endless-rusting-glave-large"){{
+        saltyLightGlaive = new BoomerangBulletType(3f, 75, modname + "-glave-large"){{
 
             consDespawned = b -> {
 
@@ -1690,7 +1691,7 @@ public class RustingBullets implements ContentList{
             reflectable = false;
         }};
 
-        cameoSmallHarpoon = new BlockHarpoonBulletType(10.15f, 32, EndlessRusting.modname + "-cameo-small-harpoon") {{
+        cameoSmallHarpoon = new BlockHarpoonBulletType(10.15f, 32, modname + "-cameo-small-harpoon") {{
             lifetime = 28.4f;
             homingPower = 0.05f;
             width = 32;
@@ -1701,7 +1702,7 @@ public class RustingBullets implements ContentList{
             bleedEffect = causticBurning;
         }};
 
-        buulasteltSmallHarpoon = new BlockHarpoonBulletType(3.15f, 5, EndlessRusting.modname + "-bulastelt-small-harpoon") {{
+        buulasteltSmallHarpoon = new BlockHarpoonBulletType(3.15f, 5, modname + "-bulastelt-small-harpoon") {{
             consUpdate = velbasedHoming;
             trueSpeed = 0;
             lifetime = 450;
@@ -1716,7 +1717,7 @@ public class RustingBullets implements ContentList{
             dischargeLightning = false;
         }};
 
-        melonaleumSmallHarpoon = new BlockHarpoonBulletType(3, 13, EndlessRusting.modname + "-melomae-harpoon"){{
+        melonaleumSmallHarpoon = new BlockHarpoonBulletType(3, 13, modname + "-melomae-harpoon"){{
             lifetime = 68.4f;
             homingPower = 0.05f;
             width = 8;
