@@ -38,8 +38,6 @@ public class EndlessRusting extends Mod{
         Events.on(FileTreeInitEvent.class, e -> {
             ModSounds.load();
         });
-        Core.settings.defaults("er.drawtrails", true);
-        Core.settings.defaults("er.advancedeffects", true);
 
         Events.on(EventType.ClientLoadEvent.class,
             e -> {

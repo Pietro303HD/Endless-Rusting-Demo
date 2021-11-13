@@ -27,17 +27,12 @@ public class RustingStatusEffects implements ContentList {
     public static Cons
             corruptShieldCons;
 
-    private float voidRepulseShieldRange = 64;
-    private FloatSeq floatSeq;
-    private float index;
+    private static float voidRepulseShieldRange = 64;
+    private static FloatSeq forces = new FloatSeq();
+    private static int index;
 
     @Override
     public void load() {
-
-        //sued by weather and to see if unit was alive during a weather effect
-        weather = new StatusEffect("weather"){
-
-        };
 
         //used by harpoons to stop harpoons from targeting the same target as another
         hpooned = new StatusEffect("hpooned"){
@@ -279,7 +274,7 @@ public class RustingStatusEffects implements ContentList {
                     float range = 64;
 
                     Seq<Unit> intUnits = Groups.unit.intersect(b.x - range, b.y - range, range * 2, range * 2);
-                    FloatSeq forces = new FloatSeq();
+                    forces.clear();
                     float[] greatestDistance = {0};
 
                     intUnits.each(u -> {
@@ -299,14 +294,14 @@ public class RustingStatusEffects implements ContentList {
                         forces.add(force);
                     });
 
-                    int[] index = {0};
+                    index = 0;
 
                     intUnits.each(u -> {
 
                         if(!u.hasEffect(corruptShield) || u.team == b.team) return;
 
-                        b.vel.setAngle(Angles.moveToward(b.rotation(), u.angleTo(b), forces.get(index[0]) * Time.delta/30));
-                        index[0]++;
+                        b.vel.setAngle(Angles.moveToward(b.rotation(), u.angleTo(b), forces.get(index) * Time.delta/30));
+                        index++;
                     });
                 });
 

@@ -39,7 +39,7 @@ public class CrystalStatusEffect extends ConsStatusEffect {
         this.colorOpacity = 0.1f;
         PixmapRegion region = Core.atlas.getPixmap(name + "-crystal");
         //spagehti...
-        crystalDrawColor = new Color(region.getPixel((int) region.width/2, (int) region.height/2));
+        crystalDrawColor = new Color(region.getPixel(region.width/2, region.height/2));
     }
 
     @Override

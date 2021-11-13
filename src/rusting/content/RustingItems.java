@@ -6,7 +6,7 @@ import mindustry.type.Item;
 
 public class RustingItems implements ContentList {
     public static Item
-        melonaleum, bulastelt, taconite, halsinte, cameoShardling, camaintAmalgam, gelChip, decilita;
+        melonaleum, bulastelt, taconite, halsinte, cameoShardling, camaintAmalgam, gelChip;
     ;
     @Override
     public void load() {
@@ -50,11 +50,6 @@ public class RustingItems implements ContentList {
 
         gelChip = new Item("gel-chip", Palr.pulseChargeStart){{
             cost = 0.15f;
-        }};
-
-        decilita = new Item("decilita", Color.valueOf("#dab687")){{
-            hardness = 2;
-            cost = 0.56f;
         }};
     }
 }
