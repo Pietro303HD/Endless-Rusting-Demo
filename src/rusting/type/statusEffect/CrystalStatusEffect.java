@@ -29,6 +29,9 @@ public class CrystalStatusEffect extends ConsStatusEffect {
         super.load();
         crystalRegion = Core.atlas.find(name + "-crystal");
         crystalStatusEffectSeq.add(this);
+        PixmapRegion region = Core.atlas.getPixmap(name + "-crystal");
+        //spagehti...
+        crystalDrawColor = new Color(region.getPixel(region.width/2, region.height/2));
     }
 
     public CrystalStatusEffect(String name) {
@@ -37,9 +40,6 @@ public class CrystalStatusEffect extends ConsStatusEffect {
         this.reloadMultiplier = 1.35f;
         this.drawColor = Color.sky;
         this.colorOpacity = 0.1f;
-        PixmapRegion region = Core.atlas.getPixmap(name + "-crystal");
-        //spagehti...
-        crystalDrawColor = new Color(region.getPixel(region.width/2, region.height/2));
     }
 
     @Override
