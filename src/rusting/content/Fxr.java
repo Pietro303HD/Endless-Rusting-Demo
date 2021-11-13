@@ -29,7 +29,7 @@ import static arc.math.Angles.randLenVectors;
 public class Fxr{
     public static final Effect
 
-        corrodedEffect = new Effect(75, e -> {
+        corrodedEffect = new Effect(75, 0, e -> {
             Draw.color(Color.white, Pal.plastanium, Pal.darkMetal, e.fin());
             Fill.circle(e.x, e.y, e.fout() * 1.6f);
             Draw.color(Color.white, Pal.plastanium, Pal.darkMetal, e.fin());
