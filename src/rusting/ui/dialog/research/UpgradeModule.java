@@ -11,10 +11,17 @@ import rusting.world.modules.ResearchModule;
  */
 public class UpgradeModule{
     public Seq<UpgradeNode> nodes = Seq.with();
+    public Seq<UpgradeNode> orphans = Seq.with();
 
     public void add(UpgradeNode node){
         nodes.add(node);
     }
+    
+    public Table table(){
+        nodes.each(node -> {
+            if(node.parent == null) orphan.add(node);
+        });
+    };
 
     public static class UpgradeNode{
         public UpgradeNode parent = null;
